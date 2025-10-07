@@ -8,7 +8,16 @@
 		<div class="grid-row">
 			<div class="index">{index + 1}</div>
 			<div class="checkbox">
-				<input type="checkbox" />
+				<input
+					type="checkbox"
+					onchange={(e) => {
+						if (e.currentTarget.checked) {
+							navigator.clipboard.writeText(githubUrl).catch((err) => {
+								console.error('Failed to copy to clipboard:', err);
+							});
+						}
+					}}
+				/>
 			</div>
 			<div class="repo">
 				<a href={githubUrl} target="_blank">{ownerRepo}</a>
