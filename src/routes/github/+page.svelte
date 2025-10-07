@@ -17,7 +17,7 @@
 		}
 	});
 
-	function handleCheckboxChange(url: string, checked: boolean) {
+	async function handleCheckboxChange(url: string, checked: boolean) {
 		if (checked) {
 			checkedRepos.add(url);
 			navigator.clipboard.writeText(url).catch((err) => {
@@ -32,6 +32,41 @@
 			});
 			const searchUrl = `https://github.com/search?${params.toString()}`;
 			window.open(searchUrl, 'GITHUB_SEARCH');
+
+			const [owner, repo] = ownerRepo.split('/');
+
+			try {
+				const searchResponse = await fetch(
+					`https://registry.npmjs.org/-/v1/search?text=${encodeURIComponent(repo)}&size=10`
+				);
+				const searchData = await searchResponse.json();
+
+				console.log('Search results:', searchData);
+
+				const matchingPackage = searchData.objects?.find((obj: any) => {
+					const repoUrl = obj.package?.links?.repository;
+					console.log('Checking repo URL:', repoUrl, 'against', url);
+					if (!repoUrl) return false;
+
+					const normalizedRepoUrl = repoUrl
+						.toLowerCase()
+						.replace('git+', '')
+						.replace(/\.git$/, '');
+					const normalizedUrl = url.toLowerCase();
+
+					return normalizedRepoUrl === normalizedUrl;
+				});
+
+				console.log('Matching package:', matchingPackage);
+
+				if (matchingPackage) {
+					const packageName = matchingPackage.package.name;
+					const npmUrl = `https://www.npmjs.com/package/${packageName}`;
+					window.open(npmUrl, 'NPM_PACKAGE');
+				}
+			} catch (err) {
+				console.error('Failed to search NPM registry:', err);
+			}
 		} else {
 			checkedRepos.delete(url);
 		}
