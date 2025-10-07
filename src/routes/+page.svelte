@@ -23,6 +23,15 @@
 			navigator.clipboard.writeText(url).catch((err) => {
 				console.error('Failed to copy to clipboard:', err);
 			});
+			window.open(url, 'GITHUB_ROOT');
+
+			const ownerRepo = url.replace('https://github.com/', '');
+			const params = new URLSearchParams({
+				q: `repo:${ownerRepo} "svelte":`,
+				type: 'code'
+			});
+			const searchUrl = `https://github.com/search?${params.toString()}`;
+			window.open(searchUrl, 'GITHUB_SEARCH');
 		} else {
 			checkedRepos.delete(url);
 		}
