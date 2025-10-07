@@ -1,5 +1,33 @@
 <script lang="ts">
 	import githubJson from '$lib/data/github.json';
+	import { onMount } from 'svelte';
+	import { SvelteSet } from 'svelte/reactivity';
+
+	let checkedRepos = new SvelteSet<string>();
+
+	onMount(() => {
+		const stored = localStorage.getItem('checked-repos');
+		if (stored) {
+			try {
+				const parsed = JSON.parse(stored);
+				parsed.forEach((url: string) => checkedRepos.add(url));
+			} catch (err) {
+				console.error('Failed to parse checked repos from localStorage:', err);
+			}
+		}
+	});
+
+	function handleCheckboxChange(url: string, checked: boolean) {
+		if (checked) {
+			checkedRepos.add(url);
+			navigator.clipboard.writeText(url).catch((err) => {
+				console.error('Failed to copy to clipboard:', err);
+			});
+		} else {
+			checkedRepos.delete(url);
+		}
+		localStorage.setItem('checked-repos', JSON.stringify(Array.from(checkedRepos)));
+	}
 </script>
 
 <div class="grid-container">
@@ -10,13 +38,8 @@
 			<div class="checkbox">
 				<input
 					type="checkbox"
-					onchange={(e) => {
-						if (e.currentTarget.checked) {
-							navigator.clipboard.writeText(githubUrl).catch((err) => {
-								console.error('Failed to copy to clipboard:', err);
-							});
-						}
-					}}
+					checked={checkedRepos.has(githubUrl)}
+					onchange={(e) => handleCheckboxChange(githubUrl, e.currentTarget.checked)}
 				/>
 			</div>
 			<div class="repo">
