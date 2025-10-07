@@ -46,7 +46,16 @@
 			<div class="repo">
 				<a href={`https://www.youtube.com/watch?v=${video.id}`} target="_blank">{video.id}</a>
 			</div>
-			<div class="description">{video.description}</div>
+			<div
+				class="description"
+				onclick={() => {
+					navigator.clipboard.writeText(video.description).catch((err) => {
+						console.error('Failed to copy description to clipboard:', err);
+					});
+				}}
+			>
+				{video.description}
+			</div>
 		</div>
 	{/each}
 </div>
@@ -90,5 +99,6 @@
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+		cursor: pointer;
 	}
 </style>
