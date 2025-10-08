@@ -4,7 +4,10 @@
 	import { SvelteSet } from 'svelte/reactivity';
 
 	let checkedRepos = new SvelteSet<string>();
-	let seenRepoNames = new Set<string>();
+
+	const allRepoNames = Object.keys(githubJson).map(
+		(url) => url.replace('https://github.com/', '').split('/')[1]
+	);
 
 	onMount(() => {
 		const stored = localStorage.getItem('checked-repos');
@@ -79,8 +82,7 @@
 	{#each Object.keys(githubJson) as githubUrl, index}
 		{@const ownerRepo = githubUrl.replace('https://github.com/', '')}
 		{@const repoName = ownerRepo.split('/')[1]}
-		{@const isDuplicate = seenRepoNames.has(repoName)}
-		{@const _ = seenRepoNames.add(repoName)}
+		{@const isDuplicate = allRepoNames.indexOf(repoName) !== index}
 		<div class="grid-row">
 			<div class="index">{index + 1}</div>
 			<div class="checkbox">
