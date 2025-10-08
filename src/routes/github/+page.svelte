@@ -2,8 +2,10 @@
 	import githubJson from '$lib/data/github.json';
 	import { onMount } from 'svelte';
 	import { SvelteSet } from 'svelte/reactivity';
+	import FilterButtons from '$lib/components/FilterButtons.svelte';
 
 	let checkedRepos = new SvelteSet<string>();
+	let visibleUrls = $state(new Set(Object.keys(githubJson)));
 
 	const allRepoNames = Object.keys(githubJson).map(
 		(url) => url.replace('https://github.com/', '').split('/')[1]
@@ -78,12 +80,18 @@
 	}
 </script>
 
+<FilterButtons
+	allItems={Object.keys(githubJson)}
+	checkedItems={checkedRepos}
+	onFilterChange={(set) => (visibleUrls = set)}
+/>
+
 <div class="grid-container">
 	{#each Object.keys(githubJson) as githubUrl, index}
 		{@const ownerRepo = githubUrl.replace('https://github.com/', '')}
 		{@const repoName = ownerRepo.split('/')[1]}
 		{@const isDuplicate = allRepoNames.indexOf(repoName) !== index}
-		<div class="grid-row">
+		<div class="grid-row" class:hidden={!visibleUrls.has(githubUrl)}>
 			<div class="index">{index + 1}</div>
 			<div class="checkbox">
 				<input
@@ -132,5 +140,9 @@
 
 	.repo {
 		padding-left: 0.5rem;
+	}
+
+	.hidden {
+		display: none;
 	}
 </style>
