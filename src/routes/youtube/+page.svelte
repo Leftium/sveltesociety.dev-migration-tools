@@ -2,8 +2,10 @@
 	import youtubeJson from '$lib/data/youtube.json';
 	import { onMount } from 'svelte';
 	import { SvelteSet } from 'svelte/reactivity';
+	import FilterButtons from '$lib/components/FilterButtons.svelte';
 
 	let checkedVideos = new SvelteSet<string>();
+	let visibleIds = $state(new Set(youtubeJson.map((v) => v.id)));
 
 	onMount(() => {
 		const stored = localStorage.getItem('checked-youtube');
@@ -54,9 +56,15 @@
 	}
 </script>
 
+<FilterButtons
+	allItems={youtubeJson.map((v) => v.id)}
+	checkedItems={checkedVideos}
+	onFilterChange={(set) => (visibleIds = set)}
+/>
+
 <div class="grid-container">
 	{#each youtubeJson as video, index}
-		<div class="grid-row">
+		<div class="grid-row" class:hidden={!visibleIds.has(video.id)}>
 			<div class="index">{index + 1}</div>
 			<div class="checkbox">
 				<input
@@ -122,5 +130,9 @@
 		text-overflow: ellipsis;
 		white-space: nowrap;
 		cursor: pointer;
+	}
+
+	.hidden {
+		display: none;
 	}
 </style>
