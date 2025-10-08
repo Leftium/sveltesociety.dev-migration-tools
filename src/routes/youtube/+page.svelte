@@ -122,6 +122,7 @@
 
 	.repo {
 		padding-left: 0.5rem;
+		font-family: monospace;
 	}
 
 	.description {

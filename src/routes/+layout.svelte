@@ -12,3 +12,9 @@
 <main class="container-fluid">
 	{@render children?.()}
 </main>
+
+<style>
+	main {
+		padding: 1rem;
+	}
+</style>
