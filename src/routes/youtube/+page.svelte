@@ -84,15 +84,27 @@
 				onfocus={(e) => {
 					e.currentTarget.rows = 10;
 					const text = e.currentTarget.value;
-					let endIndex = text.indexOf('\n\n');
-					if (endIndex === -1) {
-						endIndex = text.indexOf('\n');
+
+					let startIndex = 0;
+					const firstLineEnd = text.indexOf('\n');
+					if (firstLineEnd !== -1) {
+						const firstLine = text.substring(0, firstLineEnd).toLowerCase();
+						if (
+							firstLine.match(/^summary/i) ||
+							firstLine.includes('sponsor') ||
+							firstLine.includes('partner:')
+						) {
+							startIndex = firstLineEnd + 1;
+						}
 					}
+
+					let endIndex = text.indexOf('\n\n', startIndex);
 					if (endIndex === -1) {
 						endIndex = text.length;
 					}
-					e.currentTarget.setSelectionRange(0, endIndex);
-					const selectedText = text.substring(0, endIndex);
+
+					e.currentTarget.setSelectionRange(startIndex, endIndex);
+					const selectedText = text.substring(startIndex, endIndex);
 					navigator.clipboard.writeText(selectedText).catch((err) => {
 						console.error('Failed to copy to clipboard:', err);
 					});
