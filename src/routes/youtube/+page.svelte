@@ -81,6 +81,39 @@
 				readonly
 				rows="3"
 				value={video.description}
+				onclick={(e) => {
+					const start = e.currentTarget.selectionStart;
+					const end = e.currentTarget.selectionEnd;
+
+					if (start === end) {
+						const text = e.currentTarget.value;
+						const cursorPos = start;
+
+						let blockStart = text.lastIndexOf('\n\n', cursorPos - 1);
+						blockStart = blockStart === -1 ? 0 : blockStart + 2;
+
+						const firstLineEnd = text.indexOf('\n');
+						if (blockStart === 0 && firstLineEnd !== -1) {
+							const firstLine = text.substring(0, firstLineEnd).toLowerCase();
+							if (
+								firstLine.match(/^summary/i) ||
+								firstLine.includes('sponsor') ||
+								firstLine.includes('partner:')
+							) {
+								blockStart = firstLineEnd + 1;
+							}
+						}
+
+						let blockEnd = text.indexOf('\n\n', cursorPos);
+						blockEnd = blockEnd === -1 ? text.length : blockEnd;
+
+						e.currentTarget.setSelectionRange(blockStart, blockEnd);
+						const selectedText = text.substring(blockStart, blockEnd);
+						navigator.clipboard.writeText(selectedText).catch((err) => {
+							console.error('Failed to copy to clipboard:', err);
+						});
+					}
+				}}
 				onfocus={(e) => {
 					e.currentTarget.rows = 10;
 					const text = e.currentTarget.value;
