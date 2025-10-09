@@ -6,6 +6,7 @@
 
 	let checkedRepos = new SvelteSet<string>();
 	let visibleUrls = $state(new Set(Object.keys(githubJson)));
+	let showDuplicates = $state(false);
 
 	const allRepoNames = Object.keys(githubJson).map(
 		(url) => url.replace('https://github.com/', '').split('/')[1]
@@ -80,18 +81,27 @@
 	}
 </script>
 
-<FilterButtons
-	allItems={Object.keys(githubJson)}
-	checkedItems={checkedRepos}
-	onFilterChange={(set) => (visibleUrls = set)}
-/>
+<div class="controls">
+	<FilterButtons
+		allItems={Object.keys(githubJson)}
+		checkedItems={checkedRepos}
+		onFilterChange={(set) => (visibleUrls = set)}
+	/>
+	<label>
+		<input type="checkbox" bind:checked={showDuplicates} />
+		Duplicates
+	</label>
+</div>
 
 <div class="grid-container">
 	{#each Object.keys(githubJson) as githubUrl, index}
 		{@const ownerRepo = githubUrl.replace('https://github.com/', '')}
 		{@const repoName = ownerRepo.split('/')[1]}
 		{@const isDuplicate = allRepoNames.indexOf(repoName) !== index}
-		<div class="grid-row" class:hidden={!visibleUrls.has(githubUrl)}>
+		<div
+			class="grid-row"
+			class:hidden={!visibleUrls.has(githubUrl) || (!showDuplicates && isDuplicate)}
+		>
 			<div class="index">{index + 1}</div>
 			<div class="checkbox">
 				<input
@@ -109,6 +119,13 @@
 </div>
 
 <style>
+	.controls {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+
 	.grid-container {
 		display: grid;
 		gap: 0;
