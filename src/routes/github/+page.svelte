@@ -147,6 +147,7 @@
 		text-align: right;
 		padding-right: 1rem;
 		color: var(--pico-muted-color);
+		font-variant-numeric: tabular-nums;
 	}
 
 	.checkbox {
