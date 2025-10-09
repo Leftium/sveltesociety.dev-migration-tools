@@ -76,16 +76,39 @@
 			<div class="repo">
 				<a href={`https://www.youtube.com/watch?v=${video.id}`} target="_blank">{video.id}</a>
 			</div>
-			<div
+			<textarea
 				class="description"
-				onclick={() => {
-					navigator.clipboard.writeText(video.description).catch((err) => {
-						console.error('Failed to copy description to clipboard:', err);
+				readonly
+				rows="3"
+				value={video.description}
+				onfocus={(e) => {
+					e.currentTarget.rows = 10;
+					const text = e.currentTarget.value;
+					let endIndex = text.indexOf('\n\n');
+					if (endIndex === -1) {
+						endIndex = text.indexOf('\n');
+					}
+					if (endIndex === -1) {
+						endIndex = text.length;
+					}
+					e.currentTarget.setSelectionRange(0, endIndex);
+					const selectedText = text.substring(0, endIndex);
+					navigator.clipboard.writeText(selectedText).catch((err) => {
+						console.error('Failed to copy to clipboard:', err);
 					});
 				}}
-			>
-				{video.description}
-			</div>
+				onselect={(e) => {
+					const start = e.currentTarget.selectionStart;
+					const end = e.currentTarget.selectionEnd;
+					const selectedText = e.currentTarget.value.substring(start, end);
+					if (selectedText) {
+						navigator.clipboard.writeText(selectedText).catch((err) => {
+							console.error('Failed to copy to clipboard:', err);
+						});
+					}
+				}}
+				onblur={(e) => (e.currentTarget.rows = 3)}
+			></textarea>
 		</div>
 	{/each}
 </div>
@@ -99,7 +122,7 @@
 	.grid-row {
 		display: grid;
 		grid-template-columns: 4rem 3rem 10rem 1fr;
-		align-items: center;
+		align-items: start;
 		border-bottom: 1px solid var(--pico-muted-border-color);
 		padding: 0.5rem 0;
 	}
@@ -127,10 +150,8 @@
 
 	.description {
 		padding-left: 1rem;
-		overflow: hidden;
-		text-overflow: ellipsis;
-		white-space: nowrap;
 		cursor: pointer;
+		resize: vertical;
 	}
 
 	.hidden {
