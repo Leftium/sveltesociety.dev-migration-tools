@@ -37,7 +37,7 @@
 			window.open(takeawayUrl, 'KAGI_TAKEAWAY');
 
 			const assistantParams = new URLSearchParams({
-				q: `In 2-3 sentences, what is this video about? Don't mention "the video" or "this video" in your response. Use noun phrases instead of full sentences. ${videoUrl}`
+				q: `In 2-3 sentences, what is this video about? Don't mention "the video" or "this video" in your response. Use noun phrases instead of full sentences. Write in plain text only - no markdown, no links, no footnotes, no special formatting. ${videoUrl}`
 			});
 			const assistantUrl = `https://kagi.com/assistant?${assistantParams.toString()}`;
 			window.open(assistantUrl, 'KAGI_ASSISTANT');
