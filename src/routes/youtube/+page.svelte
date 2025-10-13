@@ -10,7 +10,7 @@
 	let showShorts = $state(false);
 	let focusedTextarea = $state<string | null>(null);
 	let textareaRefs: Record<string, HTMLElement> = {};
-	let lastMetaKey = false;
+	let lastShiftKey = false;
 
 	const shortsCount = $derived(youtubeJson.filter((v) => v.duration < 80 || v.ratio < 1).length);
 
@@ -89,11 +89,11 @@
 		});
 	}
 
-	function handleCheckboxChange(youtubeId: string, checked: boolean, metaKey: boolean) {
+	function handleCheckboxChange(youtubeId: string, checked: boolean, shiftKey: boolean) {
 		if (checked) {
 			checkedVideos.add(youtubeId);
 
-			if (!metaKey) {
+			if (!shiftKey) {
 				const videoUrl = `https://www.youtube.com/watch?v=${youtubeId}`;
 				navigator.clipboard.writeText(videoUrl).catch((err) => {
 					console.error('Failed to copy to clipboard:', err);
@@ -217,18 +217,18 @@
 						id="video-{video.id}"
 						checked={checkedVideos.has(video.id)}
 						onclick={(e) => {
-							lastMetaKey = e.metaKey;
+							lastShiftKey = e.shiftKey;
 						}}
-						onchange={(e) => handleCheckboxChange(video.id, e.currentTarget.checked, lastMetaKey)}
+						onchange={(e) => handleCheckboxChange(video.id, e.currentTarget.checked, lastShiftKey)}
 					/>
 					<label
 						for="video-{video.id}"
 						onclick={(e) => {
-							lastMetaKey = e.metaKey;
+							lastShiftKey = e.shiftKey;
 							const input = document.getElementById(`video-${video.id}`) as HTMLInputElement;
 							if (input) {
 								input.checked = !input.checked;
-								handleCheckboxChange(video.id, input.checked, e.metaKey);
+								handleCheckboxChange(video.id, input.checked, e.shiftKey);
 								e.preventDefault();
 							}
 						}}
