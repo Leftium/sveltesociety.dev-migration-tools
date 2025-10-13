@@ -3,7 +3,7 @@
 set -e
 
 echo "Fetching playlist info..."
-TOTAL=$(yt-dlp --flat-playlist "https://www.youtube.com/@SvelteSociety/" 2>/dev/null | wc -l)
+TOTAL=$(yt-dlp --flat-playlist --print "%(id)s" "https://www.youtube.com/@SvelteSociety/" 2>/dev/null | wc -l)
 echo "Total videos in playlist: $TOTAL"
 echo ""
 
@@ -44,6 +44,12 @@ echo "Starting download loop..."
 BATCH_NUM=0
 ERROR_COUNT=0
 MAX_ERRORS=3
+
+ARCHIVED=$(wc -l < src/lib/data/archive.txt 2>/dev/null || echo 0)
+if [ "$ARCHIVED" -ge "$TOTAL" ]; then
+  echo "All videos already downloaded!"
+  exit 0
+fi
 
 while true; do
   BATCH_NUM=$((BATCH_NUM + 1))
