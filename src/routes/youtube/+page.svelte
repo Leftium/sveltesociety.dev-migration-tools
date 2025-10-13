@@ -10,6 +10,7 @@
 	let showShorts = $state(false);
 	let focusedTextarea = $state<string | null>(null);
 	let textareaRefs: Record<string, HTMLElement> = {};
+	let lastMetaKey = false;
 
 	const shortsCount = $derived(youtubeJson.filter((v) => v.duration < 80 || v.ratio < 1).length);
 
@@ -88,37 +89,40 @@
 		});
 	}
 
-	function handleCheckboxChange(youtubeId: string, checked: boolean) {
+	function handleCheckboxChange(youtubeId: string, checked: boolean, metaKey: boolean) {
 		if (checked) {
 			checkedVideos.add(youtubeId);
-			const videoUrl = `https://www.youtube.com/watch?v=${youtubeId}`;
-			navigator.clipboard.writeText(videoUrl).catch((err) => {
-				console.error('Failed to copy to clipboard:', err);
-			});
-			// window.open(videoUrl, 'YOUTUBE_VIDEO');
 
-			const assistantParams = new URLSearchParams({
-				q: `In 2-3 sentences, what is this video about? Don't mention "the video" or "this video" in your response. Use noun phrases instead of full sentences. Write in plain text only - no markdown, no links, no footnotes, no special formatting. ${videoUrl}`
-			});
+			if (!metaKey) {
+				const videoUrl = `https://www.youtube.com/watch?v=${youtubeId}`;
+				navigator.clipboard.writeText(videoUrl).catch((err) => {
+					console.error('Failed to copy to clipboard:', err);
+				});
+				// window.open(videoUrl, 'YOUTUBE_VIDEO');
 
-			const assistantUrl = `https://kagi.com/assistant?${assistantParams.toString()}`;
-			window.open(assistantUrl, 'KAGI_ASSISTANT');
+				const assistantParams = new URLSearchParams({
+					q: `In 2-3 sentences, what is this video about? Don't mention "the video" or "this video" in your response. Use noun phrases instead of full sentences. Write in plain text only - no markdown, no links, no footnotes, no special formatting. ${videoUrl}`
+				});
 
-			const takeawayParams = new URLSearchParams({
-				target_language: '',
-				summary: 'takeaway',
-				url: videoUrl
-			});
-			const takeawayUrl = `https://kagi.com/summarizer?${takeawayParams.toString()}`;
-			window.open(takeawayUrl, 'KAGI_TAKEAWAY');
+				const assistantUrl = `https://kagi.com/assistant?${assistantParams.toString()}`;
+				window.open(assistantUrl, 'KAGI_ASSISTANT');
 
-			const summaryParams = new URLSearchParams({
-				target_language: '',
-				summary: 'summary',
-				url: videoUrl
-			});
-			const summaryUrl = `https://kagi.com/summarizer?${summaryParams.toString()}`;
-			window.open(summaryUrl, 'KAGI_SUMMARY');
+				const takeawayParams = new URLSearchParams({
+					target_language: '',
+					summary: 'takeaway',
+					url: videoUrl
+				});
+				const takeawayUrl = `https://kagi.com/summarizer?${takeawayParams.toString()}`;
+				window.open(takeawayUrl, 'KAGI_TAKEAWAY');
+
+				const summaryParams = new URLSearchParams({
+					target_language: '',
+					summary: 'summary',
+					url: videoUrl
+				});
+				const summaryUrl = `https://kagi.com/summarizer?${summaryParams.toString()}`;
+				window.open(summaryUrl, 'KAGI_SUMMARY');
+			}
 		} else {
 			checkedVideos.delete(youtubeId);
 		}
@@ -212,9 +216,23 @@
 						type="checkbox"
 						id="video-{video.id}"
 						checked={checkedVideos.has(video.id)}
-						onchange={(e) => handleCheckboxChange(video.id, e.currentTarget.checked)}
+						onclick={(e) => {
+							lastMetaKey = e.metaKey;
+						}}
+						onchange={(e) => handleCheckboxChange(video.id, e.currentTarget.checked, lastMetaKey)}
 					/>
-					<label for="video-{video.id}">
+					<label
+						for="video-{video.id}"
+						onclick={(e) => {
+							lastMetaKey = e.metaKey;
+							const input = document.getElementById(`video-${video.id}`) as HTMLInputElement;
+							if (input) {
+								input.checked = !input.checked;
+								handleCheckboxChange(video.id, input.checked, e.metaKey);
+								e.preventDefault();
+							}
+						}}
+					>
 						{index + 1}{#if isShort}📱{/if}
 					</label>
 				</div>
