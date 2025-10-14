@@ -211,7 +211,15 @@
 		{@const playlists = getPlaylistsForVideo(video.id)}
 		<div class="grid-row" class:hidden={!visibleIds.has(video.id) || (!showShorts && isShort)}>
 			<div class="repo">
-				<div class="checkbox-index">
+				<div class="index-wrapper">
+					{index + 1}{#if isShort}📱{/if}
+				</div>
+				<a href={`https://www.youtube.com/watch?v=${video.id}`} target="_blank">{video.id}</a>
+				<div class="meta">ratio: {video.ratio.toFixed(2)}</div>
+				<div class="meta">length: {durationStr}</div>
+			</div>
+			<div class="description-column">
+				<div class="title-wrapper">
 					<input
 						type="checkbox"
 						id="video-{video.id}"
@@ -223,6 +231,7 @@
 					/>
 					<label
 						for="video-{video.id}"
+						class="title"
 						onclick={(e) => {
 							lastShiftKey = e.shiftKey;
 							const input = document.getElementById(`video-${video.id}`) as HTMLInputElement;
@@ -233,15 +242,9 @@
 							}
 						}}
 					>
-						{index + 1}{#if isShort}📱{/if}
+						{video.title}
 					</label>
 				</div>
-				<a href={`https://www.youtube.com/watch?v=${video.id}`} target="_blank">{video.id}</a>
-				<div class="meta">ratio: {video.ratio.toFixed(2)}</div>
-				<div class="meta">length: {durationStr}</div>
-			</div>
-			<div class="description-column">
-				<div class="title">{video.title}</div>
 				{#if playlists.length > 0}
 					<div class="playlists">
 						{playlists.map((p) => p.title).join(' • ')}
@@ -311,23 +314,17 @@
 		border-bottom: none;
 	}
 
-	.checkbox-index {
-		display: flex;
-		align-items: center;
-		gap: 0.5rem;
-		margin-bottom: 0.5rem;
-	}
-
-	.checkbox-index label {
-		color: var(--pico-muted-color);
-		font-variant-numeric: tabular-nums;
-		font-size: 0.85em;
-		cursor: pointer;
-	}
-
 	.repo {
 		padding-left: 0.5rem;
 		font-family: monospace;
+	}
+
+	.index-wrapper {
+		color: var(--pico-muted-color);
+		font-variant-numeric: tabular-nums;
+		font-size: 0.85em;
+		margin-bottom: 0.5rem;
+		padding-top: 3.25rem;
 	}
 
 	.meta {
@@ -340,22 +337,30 @@
 		padding-left: 1rem;
 	}
 
+	.title-wrapper {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
 	.textarea-wrapper {
 		position: relative;
 	}
 
 	.title {
 		font-weight: 500;
-		margin-bottom: 0.25rem;
+		cursor: pointer;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
+		flex: 1;
 	}
 
 	.playlists {
 		font-size: 0.85em;
 		color: var(--pico-muted-color);
 		margin-bottom: 0.5rem;
+		margin-left: 2.25rem;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		white-space: nowrap;
