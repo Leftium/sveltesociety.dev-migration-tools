@@ -40,6 +40,13 @@
 			const aFirstPlaylist = aPlaylists[0]?.title || '';
 			const bFirstPlaylist = bPlaylists[0]?.title || '';
 
+			const aIsFrance = aFirstPlaylist === 'Svelte Society Day France 2020';
+			const bIsFrance = bFirstPlaylist === 'Svelte Society Day France 2020';
+
+			if (aIsFrance !== bIsFrance) {
+				return aIsFrance ? 1 : -1;
+			}
+
 			if (aFirstPlaylist !== bFirstPlaylist) {
 				return aFirstPlaylist.localeCompare(bFirstPlaylist);
 			}
