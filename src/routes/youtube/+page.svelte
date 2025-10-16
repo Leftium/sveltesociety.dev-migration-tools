@@ -8,6 +8,7 @@
 	let checkedVideos = new SvelteSet<string>();
 	let visibleIds = $state(new Set(youtubeJson.map((v) => v.id)));
 	let showShorts = $state(false);
+	let showDuplicates = $state(false);
 	let focusedTextarea = $state<string | null>(null);
 	let textareaRefs: Record<string, HTMLElement> = {};
 	let lastShiftKey = false;
@@ -53,6 +54,16 @@
 
 			return b.timestamp - a.timestamp;
 		})
+	);
+
+	const titleCounts = $derived(
+		sortedVideos.reduce(
+			(acc, v) => {
+				acc[v.title] = (acc[v.title] || 0) + 1;
+				return acc;
+			},
+			{} as Record<string, number>
+		)
 	);
 
 	onMount(() => {
@@ -207,6 +218,10 @@
 		<input type="checkbox" bind:checked={showShorts} />
 		Shorts ({shortsCount})
 	</label>
+	<label>
+		<input type="checkbox" bind:checked={showDuplicates} />
+		Duplicates
+	</label>
 </div>
 
 <div class="grid-container">
@@ -216,7 +231,13 @@
 		{@const seconds = Math.floor(video.duration % 60)}
 		{@const durationStr = `${minutes}:${seconds.toString().padStart(2, '0')}`}
 		{@const playlists = getPlaylistsForVideo(video.id)}
-		<div class="grid-row" class:hidden={!visibleIds.has(video.id) || (!showShorts && isShort)}>
+		{@const isDuplicate = titleCounts[video.title] > 1}
+		<div
+			class="grid-row"
+			class:hidden={!visibleIds.has(video.id) ||
+				(!showShorts && isShort) ||
+				(!showDuplicates && isDuplicate)}
+		>
 			<div class="repo">
 				<div class="index-wrapper">
 					{index + 1}{#if isShort}📱{/if}
@@ -249,7 +270,7 @@
 							}
 						}}
 					>
-						{video.title}
+						{#if isDuplicate}⚠️&nbsp;{/if}{video.title}
 					</label>
 				</div>
 				{#if playlists.length > 0}
