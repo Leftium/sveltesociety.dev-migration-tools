@@ -5268,5 +5268,25 @@
     "timestamp": 1760157561,
     "title": "This Week in Svelte, Ep. 120 — Changelog, Storybook for Svelte Part 3: Testing",
     "ratio": 1.7777777777777777
+  },
+  {
+    "id": "TDTS74Bz6Eo",
+    "description": "Summary\n\n\nIn this episode of Svelt Radio, the hosts welcome Jeppe Reinhold from Chromatic to discuss the dramatic\n\n\nimprovements in Storybook's Svelte integration. Jeppe shares how a critical video by Brittany struggling with\n\n\nStorybook setup sparked a complete overhaul of the Svelte experience, leading to better collaboration with the\n\n\nSvelte core team and significant enhancements in functionality. \n\n\nThe conversation covers new features like Svelte\n\n\nCSF for writing stories in native Svelte syntax, improved testing capabilities, support for async components, and\n\n\nupcoming features in Storybook 10. The team also discusses the philosophy behind component-driven\n\n\ndevelopment, the challenges of integrating with remote functions, and Storybook's future direction including AI\n\n\nsupport and better theming capabilities.\n\n\n\nLinks\n\n  •  Storybook (https://github.com/storybookjs/storybook) \n       •  Storybook Svelte Guide (https://storybook.js.org/tutorials/intro-to-storybook/svelte/en/get-started/) \n  •  addon-svelte-csf (https://github.com/storybookjs/addon-svelte-csf) \n\nUnpopular Opinions\n\n  •  Antony: Svelte is an independent project! Don’t throw it in the bin\n  •  Jeppe: I like GANTT charts\n\n\nPicks\n\n  •  Antony: Castles!\n  •  Brittney: Spain!\n  •  Jeppe: Tuple (https://tuple.app)",
+    "duration": 2534,
+    "width": 1080,
+    "height": 1080,
+    "timestamp": 1760608287,
+    "title": "Storybook is actually good now, with Jeppe Reinhold",
+    "ratio": 1
+  },
+  {
+    "id": "V-j4w6j8OB4",
+    "description": "",
+    "duration": 4911,
+    "width": 1920,
+    "height": 1080,
+    "timestamp": 1760763813,
+    "title": "This Week in Svelte, Ep. 121 — Changelog, Svelte MCP Server",
+    "ratio": 1.7777777777777777
   }
 ]
