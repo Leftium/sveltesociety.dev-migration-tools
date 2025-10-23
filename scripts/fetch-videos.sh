@@ -34,6 +34,7 @@ while true; do
     --print '{"id": "%(id)s", "description": %(description)j, "duration": %(duration)s, "width": %(width)s, "height": %(height)s, "timestamp": %(timestamp)s, "title": %(title)j}' \
     --force-write-archive \
     "https://www.youtube.com/@SvelteSociety/" \
+    | tee >(jq -r '.id' >&2) \
     | jq -s 'map(. + {ratio: (.width / .height)})' \
     | jq -s --slurpfile old src/lib/data/youtube.json '[($old[0] // []), .[0]] | add | unique_by(.id) | sort_by(.timestamp)' \
     > src/lib/data/youtube-new.json \
