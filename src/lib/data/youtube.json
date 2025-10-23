@@ -4731,9 +4731,10 @@
     "width": 1920,
     "height": 1080,
     "timestamp": 1760445117,
-    "upload_date": "20251014",
     "release_timestamp": 1761242663,
-    "title": "Svelte London - October 2025"
+    "title": "Svelte London - October 2025",
+    "subtitles": false,
+    "automatic_captions": false
   },
   {
     "id": "TDTS74Bz6Eo",
@@ -4751,7 +4752,10 @@
     "width": 1920,
     "height": 1080,
     "timestamp": 1760763813,
-    "title": "This Week in Svelte, Ep. 121 — Changelog, Svelte MCP Server"
+    "release_timestamp": 1760715180,
+    "title": "This Week in Svelte, Ep. 121 — Changelog, Svelte MCP Server",
+    "subtitles": true,
+    "automatic_captions": true
   },
   {
     "id": "b4EO8-rZMy8",
@@ -4760,6 +4764,9 @@
     "width": 1080,
     "height": 1080,
     "timestamp": 1761226499,
-    "title": "Macrodata Refinement with Ken Kunz"
+    "release_timestamp": null,
+    "title": "Macrodata Refinement with Ken Kunz",
+    "subtitles": false,
+    "automatic_captions": true
   }
 ]
