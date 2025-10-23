@@ -6,7 +6,8 @@
 	import FilterButtons from '$lib/components/FilterButtons.svelte';
 
 	let checkedVideos = new SvelteSet<string>();
-	let visibleIds = $state(new Set(youtubeJson.map((v) => v.id)));
+	let visibleIds = $state(new Set<string>());
+	let filterMode = $state<'all' | 'todo' | 'completed'>('todo');
 	let showShorts = $state(false);
 	let showDuplicates = $state(false);
 	let focusedTextarea = $state<string | null>(null);
@@ -28,31 +29,10 @@
 				return aIsShort ? -1 : 1;
 			}
 
-			const aPlaylists = getPlaylistsForVideo(a.id);
-			const bPlaylists = getPlaylistsForVideo(b.id);
-
-			const aHasPlaylist = aPlaylists.length > 0;
-			const bHasPlaylist = bPlaylists.length > 0;
-
-			if (aHasPlaylist !== bHasPlaylist) {
-				return aHasPlaylist ? -1 : 1;
-			}
-
-			const aFirstPlaylist = aPlaylists[0]?.title || '';
-			const bFirstPlaylist = bPlaylists[0]?.title || '';
-
-			const aIsFrance = aFirstPlaylist === 'Svelte Society Day France 2020';
-			const bIsFrance = bFirstPlaylist === 'Svelte Society Day France 2020';
-
-			if (aIsFrance !== bIsFrance) {
-				return aIsFrance ? 1 : -1;
-			}
-
-			if (aFirstPlaylist !== bFirstPlaylist) {
-				return aFirstPlaylist.localeCompare(bFirstPlaylist);
-			}
-
-			return b.timestamp - a.timestamp;
+			const aTime = a.release_timestamp || a.timestamp;
+			const bTime = b.release_timestamp || b.timestamp;
+			const timeSort = filterMode === 'todo' ? aTime - bTime : bTime - aTime;
+			return timeSort;
 		})
 	);
 
@@ -76,6 +56,9 @@
 				console.error('Failed to parse checked videos from localStorage:', err);
 			}
 		}
+
+		const todoVideos = sortedVideos.filter((v) => !checkedVideos.has(v.id));
+		visibleIds = new Set(todoVideos.map((v) => v.id));
 	});
 
 	function autoSelect(node: HTMLTextAreaElement) {
@@ -212,7 +195,10 @@
 	<FilterButtons
 		allItems={sortedVideos.map((v) => v.id)}
 		checkedItems={checkedVideos}
-		onFilterChange={(set) => (visibleIds = set)}
+		onFilterChange={(set, mode) => {
+			visibleIds = set;
+			filterMode = mode;
+		}}
 	/>
 	<label>
 		<input type="checkbox" bind:checked={showShorts} />
@@ -232,6 +218,8 @@
 		{@const durationStr = `${minutes}:${seconds.toString().padStart(2, '0')}`}
 		{@const playlists = getPlaylistsForVideo(video.id)}
 		{@const isDuplicate = titleCounts[video.title] > 1}
+		{@const displayTimestamp = video.release_timestamp || video.timestamp}
+		{@const dateStr = new Date(displayTimestamp * 1000).toISOString().split('T')[0]}
 		<div
 			class="grid-row"
 			class:hidden={!visibleIds.has(video.id) ||
@@ -243,6 +231,7 @@
 					{index + 1}{#if isShort}📱{/if}
 				</div>
 				<a href={`https://www.youtube.com/watch?v=${video.id}`} target="_blank">{video.id}</a>
+				<div class="meta">{dateStr}</div>
 				<div class="meta">ratio: {video.ratio.toFixed(2)}</div>
 				<div class="meta">length: {durationStr}</div>
 			</div>

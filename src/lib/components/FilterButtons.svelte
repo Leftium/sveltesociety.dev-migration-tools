@@ -2,7 +2,7 @@
 	interface Props {
 		allItems: string[];
 		checkedItems: Set<string>;
-		onFilterChange: (visibleSet: Set<string>) => void;
+		onFilterChange: (visibleSet: Set<string>, mode: 'all' | 'todo' | 'completed') => void;
 	}
 
 	let { allItems, checkedItems, onFilterChange }: Props = $props();
@@ -17,15 +17,15 @@
 	);
 
 	function showAll() {
-		onFilterChange(new Set(allItems));
+		onFilterChange(new Set(allItems), 'all');
 	}
 
 	function showTodo() {
-		onFilterChange(new Set(allItems.filter((item) => !checkedItems.has(item))));
+		onFilterChange(new Set(allItems.filter((item) => !checkedItems.has(item))), 'todo');
 	}
 
 	function showCompleted() {
-		onFilterChange(new Set(allItems.filter((item) => checkedItems.has(item))));
+		onFilterChange(new Set(allItems.filter((item) => checkedItems.has(item))), 'completed');
 	}
 </script>
 

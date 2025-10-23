@@ -85,7 +85,7 @@
 	<FilterButtons
 		allItems={Object.keys(githubJson)}
 		checkedItems={checkedRepos}
-		onFilterChange={(set) => (visibleUrls = set)}
+		onFilterChange={(set, _mode) => (visibleUrls = set)}
 	/>
 	<label>
 		<input type="checkbox" bind:checked={showDuplicates} />
