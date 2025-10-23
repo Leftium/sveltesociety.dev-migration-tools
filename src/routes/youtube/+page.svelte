@@ -280,7 +280,7 @@
 					<textarea
 						class="description"
 						readonly
-						rows="3"
+						rows="4"
 						value={video.description}
 						onfocus={(e) => {
 							e.currentTarget.blur();
