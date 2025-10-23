@@ -237,6 +237,12 @@
 				<div class="meta">{dateStr}</div>
 				<div class="meta">ratio: {ratio.toFixed(2)}</div>
 				<div class="meta">length: {durationStr}</div>
+				{#if video.automatic_captions !== undefined}
+					<div class="meta">captions: {video.automatic_captions ? '✓' : '✗'}</div>
+				{/if}
+				{#if video.subtitles !== undefined}
+					<div class="meta">subtitles: {video.subtitles ? '✓' : '✗'}</div>
+				{/if}
 			</div>
 			<div class="description-column">
 				<div class="title-wrapper">
