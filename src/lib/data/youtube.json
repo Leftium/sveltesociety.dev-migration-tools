@@ -5250,6 +5250,16 @@
     "ratio": 1.7777777777777777
   },
   {
+    "id": "fsWp3bvLA4c",
+    "description": "Join us online, or in person, for the October Svelte London!\n\nhttps://guild.host/events/svelte-london-october-cx03nw\n\nTalks: TBD\n\nWe're being hosted by Tessl!",
+    "duration": 6050,
+    "width": 1920,
+    "height": 1080,
+    "timestamp": 1760445117,
+    "title": "Svelte London - October 2025",
+    "ratio": 1.7777777777777777
+  },
+  {
     "id": "TDTS74Bz6Eo",
     "description": "Summary\n\n\nIn this episode of Svelt Radio, the hosts welcome Jeppe Reinhold from Chromatic to discuss the dramatic\n\n\nimprovements in Storybook's Svelte integration. Jeppe shares how a critical video by Brittany struggling with\n\n\nStorybook setup sparked a complete overhaul of the Svelte experience, leading to better collaboration with the\n\n\nSvelte core team and significant enhancements in functionality. \n\n\nThe conversation covers new features like Svelte\n\n\nCSF for writing stories in native Svelte syntax, improved testing capabilities, support for async components, and\n\n\nupcoming features in Storybook 10. The team also discusses the philosophy behind component-driven\n\n\ndevelopment, the challenges of integrating with remote functions, and Storybook's future direction including AI\n\n\nsupport and better theming capabilities.\n\n\n\nLinks\n\n  •  Storybook (https://github.com/storybookjs/storybook) \n       •  Storybook Svelte Guide (https://storybook.js.org/tutorials/intro-to-storybook/svelte/en/get-started/) \n  •  addon-svelte-csf (https://github.com/storybookjs/addon-svelte-csf) \n\nUnpopular Opinions\n\n  •  Antony: Svelte is an independent project! Don’t throw it in the bin\n  •  Jeppe: I like GANTT charts\n\n\nPicks\n\n  •  Antony: Castles!\n  •  Brittney: Spain!\n  •  Jeppe: Tuple (https://tuple.app)",
     "duration": 2534,
