@@ -14,7 +14,9 @@
 	let textareaRefs: Record<string, HTMLElement> = {};
 	let lastShiftKey = false;
 
-	const shortsCount = $derived(youtubeJson.filter((v) => v.duration < 80 || v.ratio < 1).length);
+	const shortsCount = $derived(
+		youtubeJson.filter((v) => v.duration < 80 || v.width / v.height < 1).length
+	);
 
 	function getPlaylistsForVideo(videoId: string) {
 		return playlistsJson.filter((playlist) => playlist.video_ids.includes(videoId));
@@ -22,8 +24,8 @@
 
 	const sortedVideos = $derived(
 		youtubeJson.toSorted((a, b) => {
-			const aIsShort = a.duration < 80 || a.ratio < 1;
-			const bIsShort = b.duration < 80 || b.ratio < 1;
+			const aIsShort = a.duration < 80 || a.width / a.height < 1;
+			const bIsShort = b.duration < 80 || b.width / b.height < 1;
 
 			if (aIsShort !== bIsShort) {
 				return aIsShort ? -1 : 1;
@@ -212,7 +214,8 @@
 
 <div class="grid-container">
 	{#each sortedVideos as video, index}
-		{@const isShort = video.duration < 80 || video.ratio < 1}
+		{@const ratio = video.width / video.height}
+		{@const isShort = video.duration < 80 || ratio < 1}
 		{@const minutes = Math.floor(video.duration / 60)}
 		{@const seconds = Math.floor(video.duration % 60)}
 		{@const durationStr = `${minutes}:${seconds.toString().padStart(2, '0')}`}
@@ -232,7 +235,7 @@
 				</div>
 				<a href={`https://www.youtube.com/watch?v=${video.id}`} target="_blank">{video.id}</a>
 				<div class="meta">{dateStr}</div>
-				<div class="meta">ratio: {video.ratio.toFixed(2)}</div>
+				<div class="meta">ratio: {ratio.toFixed(2)}</div>
 				<div class="meta">length: {durationStr}</div>
 			</div>
 			<div class="description-column">
