@@ -344,7 +344,6 @@
 		font-variant-numeric: tabular-nums;
 		font-size: 0.85em;
 		margin-bottom: 0.5rem;
-		padding-top: 3.25rem;
 	}
 
 	.meta {
