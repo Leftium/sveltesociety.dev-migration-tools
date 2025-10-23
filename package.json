@@ -12,7 +12,9 @@
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
 		"format": "prettier --write .",
 		"lint": "prettier --check . && eslint .",
-		"data:yt": "./scripts/fetch-youtube.sh"
+		"data:videos": "./scripts/fetch-videos.sh",
+		"data:playlists": "./scripts/fetch-playlists.sh",
+		"data:youtube": "npm run data:videos && npm run data:playlists"
 	},
 	"devDependencies": {
 		"@eslint/compat": "^1.4.0",
