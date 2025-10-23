@@ -5268,5 +5268,15 @@
     "timestamp": 1760763813,
     "title": "This Week in Svelte, Ep. 121 — Changelog, Svelte MCP Server",
     "ratio": 1.7777777777777777
+  },
+  {
+    "id": "b4EO8-rZMy8",
+    "description": "In this episode of Svelte Radio, Ken Kunz (https://bsky.app/profile/kenthropic.com)  joins the hosts to discuss his journey with Svelte, from discovering it\n\n\nthrough Rich Harris's \"Rethinking Reactivity\" talk to building complex financial applications. Ken shares his\n\n\nexperience working on Trading Strategy, a decentralized finance platform, and the challenges of implementing\n\n\nsophisticated charting solutions. \n\n\nThe conversation also covers Ken's memorable Svelte Summit talk (https://www.youtube.com/watch?v=3yuQQ0JeRgQ)  where he\n\n\nrecreated the Macrodata Refinement interface from the TV show Severance, complete with props and staying in\n\n\ncharacter throughout. The episode touches on testing philosophies, state management with his library Svelte- (https://github.com/kenkunz/svelte-fsm) \n\n\nFSM (https://github.com/kenkunz/svelte-fsm) , and the newly launched Svelte Society Chicago chapter (https://guild.host/svelte-chicago/events) .\n\n\nNotes\n\n  •  Trading Strategy (https://tradingstrategy.ai/) \n  •  LayerChart (https://www.layerchart.com/) \n  •  TradingView Lightweight Chart (https://www.tradingview.com/lightweight-charts/) \n  •  xstate (https://xstate.js.org/) \n  •  svelte-fsm (https://github.com/kenkunz/svelte-fsm) \n       •  Talk (https://www.youtube.com/watch?v=3_D-3HPUdEI) \n  •  Runed (https://github.com/svecosystem/runed) \n  •  Macrodata Refinement Talk (https://www.youtube.com/watch?v=3yuQQ0JeRgQ) \n       •  GitHub Repo (https://github.com/kenkunz/svelte-mdr) \n       •  Website (https://mdr.kenthropic.com) \n  •  Bert B's Svelte Summit Talk (https://www.youtube.com/watch?v=V-5nr6BhZPA) \n  •  Svelte Chicago (https://guild.host/svelte-chicago/events) \n\nPicks\n\n  •  Kevin: Zen Browser (https://zen-browser.app/) \n       •  Zed (https://zed.dev) \n       •  Zod (https://zod.dev/) \n  •  Antony: n8n (https://n8n.io/) \n       •  Active Pieces (https://www.activepieces.com/) \n  •  Brittney: Tab Groups!\n  •  Ken: Rock Climbing!\n       •  Brene Brown (https://brenebrown.com/)",
+    "duration": 3898,
+    "width": 1080,
+    "height": 1080,
+    "timestamp": 1761226499,
+    "title": "Macrodata Refinement with Ken Kunz",
+    "ratio": 1
   }
 ]
