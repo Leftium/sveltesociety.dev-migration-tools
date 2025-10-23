@@ -31,11 +31,12 @@ while true; do
     --sleep-interval 3 --max-sleep-interval 10 \
     --sleep-requests 1 \
     --max-downloads 5 \
-    --print '{"id": "%(id)s", "description": %(description)j, "duration": %(duration)s, "width": %(width)s, "height": %(height)s, "timestamp": %(timestamp)s, "release_timestamp": %(release_timestamp)s, "title": %(title)j}' \
+    --print '{"id": "%(id)s", "description": %(description)j, "duration": %(duration)s, "width": %(width)s, "height": %(height)s, "timestamp": %(timestamp)s, "release_timestamp": "%(release_timestamp)s", "title": %(title)j, "subtitles_raw": %(subtitles|{})j, "automatic_captions_raw": %(automatic_captions|{})j}' \
     --force-write-archive \
     "https://www.youtube.com/@SvelteSociety/" \
     | tee >(jq -r '.id' >&2) \
-    | jq -s --slurpfile old src/lib/data/youtube.json '[($old[0] // []), .[]] | add | unique_by(.id) | sort_by(.timestamp)' \
+    | jq '.release_timestamp = (if .release_timestamp == "NA" then null else (.release_timestamp | tonumber) end) | .subtitles = (.subtitles_raw != {}) | .automatic_captions = (.automatic_captions_raw != {}) | del(.subtitles_raw, .automatic_captions_raw)' \
+    | jq -s --slurpfile old src/lib/data/youtube.json '($old[0] // []) + . | unique_by(.id) | sort_by(.timestamp)' \
     > src/lib/data/youtube-new.json \
     && mv src/lib/data/youtube-new.json src/lib/data/youtube.json
   
