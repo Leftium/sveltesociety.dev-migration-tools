@@ -22,8 +22,11 @@ while true; do
   BATCH_NUM=$((BATCH_NUM + 1))
   echo "=== Batch $BATCH_NUM ==="
   
+  LAST_ARCHIVED=$(wc -l < src/lib/data/archive.txt 2>/dev/null || echo 0)
+  
   yt-dlp \
     --skip-download \
+    --ignore-errors \
     --download-archive src/lib/data/archive.txt \
     --sleep-interval 3 --max-sleep-interval 10 \
     --sleep-requests 1 \
@@ -64,6 +67,12 @@ while true; do
   if [ "$ARCHIVED" -ge "$TOTAL" ]; then
     echo ""
     echo "All videos downloaded!"
+    break
+  fi
+  
+  if [ "$ARCHIVED" -eq "$LAST_ARCHIVED" ]; then
+    echo ""
+    echo "No progress made - likely live/scheduled videos remaining"
     break
   fi
   
