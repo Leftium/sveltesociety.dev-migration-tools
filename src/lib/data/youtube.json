@@ -4772,13 +4772,13 @@
   {
     "id": "o4kcABS-XH4",
     "description": "",
-    "duration": 4669,
+    "duration": 4673,
     "width": 1920,
     "height": 1080,
-    "timestamp": 1761302603,
+    "timestamp": 1761365918,
     "release_timestamp": 1761316335,
     "title": "This Week in Svelte, Ep. 122 — Changelog, svedit.dev",
-    "subtitles": false,
-    "automatic_captions": false
+    "subtitles": true,
+    "automatic_captions": true
   }
 ]
