@@ -4780,5 +4780,29 @@
     "title": "This Week in Svelte, Ep. 122 — Changelog, svedit.dev",
     "subtitles": true,
     "automatic_captions": true
+  },
+  {
+    "id": "3u-PXSbU5iA",
+    "description": "We get some expert help from Jeppe to integrate Storybook into the new Svelte Society website.",
+    "duration": 6933,
+    "width": 1920,
+    "height": 1080,
+    "timestamp": 1761793514,
+    "release_timestamp": 1761742883,
+    "title": "Adding Storybook to Svelte Society with Jeppe Reinhold",
+    "subtitles": true,
+    "automatic_captions": true
+  },
+  {
+    "id": "6PTJZB-0eDY",
+    "description": "In this episode, Stanislav Khromov joins the Svelte Radio team to discuss his work on Svelte Bench, a\n\n\nbenchmarking tool that scientifically measures how well different LLMs understand and write Svelte 5 code.\n\n\nThe conversation explores the challenges of AI-assisted coding with Svelte 5, the development of the official\n\n\nSvelte MCP (Model Context Protocol) that provides LLMs with documentation and auto-fixing capabilities, and\n\n\nthe surprising performance differences between major AI providers. Stanislav also shares insights on working\n\n\nwith AI tools, the future of local models, and the economics of AI coding assistants.\n\n\nNotes\n\n  •  Stanislav Khromov (https://stanislav.garden) \n  •  Svelte Bench (https://khromov.github.io/svelte-bench/benchmark-results-merged.html) \n       •  GitHub (https://github.com/khromov/svelte-bench) \n  •  Svelte MCP (https://svelte.dev/docs/mcp/overview) \n  •  Anthropic Spending VC Money (https://www.wheresyoured.at/costs/) \n\nUnpopular Opinions\n\n  •  Kevin: Serverless is overrated\n  •  Stanislav: OpenAI has the worst models of the big three\n  •  Antony: Heat Pumps are bad\n       •  Technology Connections (https://www.youtube.com/c/TechnologyConnections/videos) \n       •  Tech Ingredients (https://www.youtube.com/@TechIngredients/videos) \n\nPicks\n\n  •  Kevin: Kasai Hibachi Grill (https://eu.kasaigrills.com/)  (now tested, and can confirm, it is PENG!)\n     Stanislav: Ball x Pit (https://store.steampowered.com/app/2062430/BALL_x_PIT/) \n     Antony: Saunas By the Sea",
+    "duration": 4438,
+    "width": 1080,
+    "height": 1080,
+    "timestamp": 1761841215,
+    "release_timestamp": null,
+    "title": "Benchmarking AI with Stanislav Khromov",
+    "subtitles": false,
+    "automatic_captions": true
   }
 ]
