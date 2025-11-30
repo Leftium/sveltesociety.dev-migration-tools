@@ -4804,5 +4804,29 @@
     "title": "Benchmarking AI with Stanislav Khromov",
     "subtitles": false,
     "automatic_captions": true
+  },
+  {
+    "id": "xc8BFOhZ11w",
+    "description": "",
+    "duration": 3150,
+    "width": 1920,
+    "height": 1080,
+    "timestamp": 1764385885,
+    "release_timestamp": 1764338567,
+    "title": "This Week in Svelte, Ep. 123 — Changelog",
+    "subtitles": true,
+    "automatic_captions": true
+  },
+  {
+    "id": "bLqFT2kTK6w",
+    "description": "Kevin is joined by core maintainer Elliott Johnson to talk about the new Hydratable API\n\nDocs: https://svelte.dev/docs/svelte/hydratable\nGitHub PR: https://github.com/sveltejs/svelte/pull/17154",
+    "duration": 2929,
+    "width": 1920,
+    "height": 1080,
+    "timestamp": 1764398611,
+    "release_timestamp": 1764351316,
+    "title": "Building Hydratable with Elliott Johnson",
+    "subtitles": true,
+    "automatic_captions": true
   }
 ]
